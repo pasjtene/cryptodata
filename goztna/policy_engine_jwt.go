@@ -17,8 +17,8 @@ type ZTNAClaims struct {
 	jwt.RegisteredClaims
 }
 
-// ⚠️ IMPORTANT: In a real system, this secret key must be stored securely (e.g., HashiCorp Vault)
-// and should be a strong, cryptographically secure key, not a simple string.
+// IMPORTANT: this secret key must be stored securely (e.g., HashiCorp Vault)
+// and should be a strong, cryptographically secure key, not a simple string. this is a dummy key
 var ZTNAPrivateKey = []byte("PascalJTSecureKeyForSigningTokens")
 
 func generateAccessJWT(username string, app string, posture string) (string, error) {
