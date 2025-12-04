@@ -9,7 +9,7 @@ import (
 )
 
 // Define the custom claims structure for the ZTNA token
-type ZTNAClaims struct {
+type ZTNAClaims1 struct {
 	// The specific application the user is authorized for
 	TargetApp string `json:"target_app"`
 	// The security context (e.g., device health score)
@@ -19,13 +19,13 @@ type ZTNAClaims struct {
 
 // IMPORTANT: this secret key must be stored securely (e.g., HashiCorp Vault)
 // and should be a strong, cryptographically secure key, not a simple string. this is a dummy key
-var ZTNAPrivateKey = []byte("PascalJTSecureKeyForSigningTokens")
+var ZTNAPrivateKey1 = []byte("PascalJTSecureKeyForSigningTokens")
 
 func generateAccessJWT(username string, app string, posture string) (string, error) {
 	// Token expires in 15 minutes - enforcing the "Never Trust" policy
 	expirationTime := time.Now().Add(15 * time.Minute)
 
-	claims := &ZTNAClaims{
+	claims := &ZTNAClaims1{
 		TargetApp:     app,
 		DevicePosture: posture,
 		RegisteredClaims: jwt.RegisteredClaims{
@@ -40,7 +40,7 @@ func generateAccessJWT(username string, app string, posture string) (string, err
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	// Sign the token with the private key
-	tokenString, err := token.SignedString(ZTNAPrivateKey)
+	tokenString, err := token.SignedString(ZTNAPrivateKey1)
 	if err != nil {
 		return "", fmt.Errorf("could not sign token: %w", err)
 	}
@@ -48,7 +48,7 @@ func generateAccessJWT(username string, app string, posture string) (string, err
 	return tokenString, nil
 }
 
-func main() {
+func main1() {
 	// --- Policy Engine Logic: Calculate trust and generate token ---
 
 	user := "p.tene@jtnet.io"
