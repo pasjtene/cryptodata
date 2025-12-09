@@ -18,7 +18,7 @@ import (
 // setupCerts creates a self-signed root CA, a server certificate, and a client certificate
 // to enable the mTLS connection for demonstration purposes.
 func setupCerts() (tls.Certificate, *x509.CertPool, error) {
-	// 1. Create Root CA
+	// Create Root CA
 	ca := &x509.Certificate{
 		SerialNumber: big.NewInt(2023),
 		Subject: pkix.Name{
@@ -54,7 +54,7 @@ func setupCerts() (tls.Certificate, *x509.CertPool, error) {
 		return tls.Certificate{}, nil, fmt.Errorf("failed to append CA to pool")
 	}
 
-	// 2. Create Server Certificate (signed by CA)
+	// Create Server Certificate (signed by CA)
 	serverCertTemplate := &x509.Certificate{
 		SerialNumber: big.NewInt(2),
 		Subject: pkix.Name{
@@ -98,12 +98,12 @@ func setupCerts() (tls.Certificate, *x509.CertPool, error) {
 		return tls.Certificate{}, nil, fmt.Errorf("failed to load server key pair: %w", err)
 	}
 
-	// 3. Create Client Certificate (signed by CA)
+	// Create Client Certificate (signed by CA)
 	clientCertTemplate := &x509.Certificate{
 		SerialNumber: big.NewInt(3),
 		Subject: pkix.Name{
 			Organization: []string{"Client Agent 1"},
-			CommonName:   "user-p-tene", // This is the identity the Broker will check
+			CommonName:   "user-pascal-jt", // This is the identity the Broker will check
 		},
 		NotBefore:   time.Now(),
 		NotAfter:    time.Now().AddDate(0, 3, 0),

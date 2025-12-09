@@ -63,15 +63,15 @@ func proxyHandler(w http.ResponseWriter, r *http.Request) {
 	// Policy Enforcement (Check Target Application) ---
 	// Only allow access if the JWT specifically authorizes the requested path
 	targetApp := claims.TargetApp
-	if targetApp != "db-api.finance.corp" {
+	if targetApp != "api.finance-app.net" {
 		http.Error(w, fmt.Sprintf("Access Denied: Token grants access to %s, not %s", targetApp, r.URL.Path), http.StatusForbidden)
 		log.Printf("❌ Policy Violation: Token is for %s, requested path is %s", targetApp, r.URL.Path)
 		return
 	}
 	log.Printf("✅ Authorization Granted: Token for %s is valid and current", targetApp)
 
-	// --- 4. Proxy/Forwarding Logic (Micro-Segmentation) ---
-	// In a real system, the Broker would now:
+	// Proxy/Forwarding Logic (Micro-Segmentation) ---
+	// the Broker should now:
 	// a) Open a new, secure connection (mTLS/WireGuard) to the internal application (db-api.finance.corp)
 	// b) Forward the request body/method.
 	// c) Send the response back to the client.
